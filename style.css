@@ -279,7 +279,7 @@ body {
 }
 
 .solucao-bloqueada::after {
-  content: "Solução bloqueada pela";
+  content: "Solução bloqueada";
   position: absolute;
   inset: 0;
   display: flex;
