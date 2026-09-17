@@ -101,4 +101,214 @@ body {
 .detalhe-exercicio {
   background: var(--card-bg); border-radius: var(--radius);
   box-shadow: var(--shadow-sm); border: 1px solid var(--border-light);
-  padding
+  padding: 1.75rem;
+}
+.detalhe-exercicio h2 {
+  font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem; color: #1a1e21;
+}
+.meta-badges {
+  display: flex; flex-wrap: wrap; gap: 0.75rem;
+  margin: 1rem 0 1.5rem 0; align-items: center;
+}
+.badge {
+  font-size: 0.75rem; font-weight: 600;
+  padding: 0.25rem 0.75rem; border-radius: 30px;
+  letter-spacing: 0.02em; background: #e9ecef; color: #495057;
+}
+.badge.facil { background: #e6f4ea; color: #1e7b3c; }
+.badge.medio { background: #fff3e0; color: #b85e00; }
+.badge.dificil { background: #fce8e8; color: #b22222; }
+
+.tag {
+  font-family: var(--font-mono); font-size: 0.75rem;
+  background: #f1f3f5; color: #2b3a4a;
+  padding: 0.2rem 0.7rem; border-radius: 16px;
+  border: 1px solid var(--border-light);
+}
+.enunciado {
+  font-size: 1rem; color: #2c3035; margin-bottom: 2rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+}
+.enunciado p { margin-bottom: 0.75rem; }
+.enunciado ul { margin-left: 1.5rem; margin-bottom: 0.8rem; }
+.enunciado code {
+  font-family: var(--font-mono); background: #f1f3f5;
+  padding: 0.2rem 0.4rem; border-radius: 4px; font-size: 0.9em;
+}
+.enunciado strong { color: #1a1e21; }
+
+/* Estilos extras do enunciado detalhado (Exercício 3) */
+.enunciado h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1a1e21;
+  margin: 1.5rem 0 0.6rem 0;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--border-light);
+}
+.enunciado h3:first-child { margin-top: 0; }
+
+.enunciado h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.1rem 0 0.5rem 0;
+}
+.enunciado h4 code {
+  font-family: var(--font-mono);
+  background: #eef1f4;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  color: var(--accent);
+  font-size: 0.95em;
+}
+.enunciado ul li { margin-bottom: 0.35rem; line-height: 1.55; }
+.enunciado p em { color: #495057; font-style: italic; }
+
+.aviso-importante {
+  background: #fff8e1;
+  border-left: 4px solid #e67e22;
+  padding: 0.85rem 1rem;
+  border-radius: 6px;
+  margin: 1rem 0;
+  color: #7a4a00;
+  font-size: 0.93rem;
+  line-height: 1.55;
+}
+.aviso-importante strong { color: #b85e00; }
+.aviso-importante code {
+  background: rgba(230, 126, 34, 0.15);
+  color: #8a4500;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+}
+
+/* CÓDIGO */
+.code-block {
+  background: var(--code-bg); color: var(--code-text);
+  font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.6;
+  padding: 1.25rem 1.5rem; border-radius: 8px;
+  overflow-x: auto; white-space: pre;
+  box-shadow: inset 0 0 0 1px #2d2d2d;
+  margin: 1rem 0 0.5rem 0; border: 1px solid #333;
+}
+.code-block .comment { color: #6a9955; }
+.code-block .keyword { color: #569cd6; }
+.code-block .type { color: #4ec9b0; }
+.code-block .string { color: #ce9178; }
+.code-block .number { color: #b5cea8; }
+.code-block .method { color: #dcdcaa; }
+.code-block .annotation { color: #dcdcaa; font-style: italic; }
+
+/* GUIA */
+.guia-container { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.guia-card {
+  background: var(--card-bg); border-radius: var(--radius);
+  border: 1px solid var(--border-light); box-shadow: var(--shadow-sm);
+  padding: 1.5rem;
+}
+.guia-card h3 {
+  font-size: 1.2rem; font-weight: 600; margin-bottom: 0.75rem;
+  color: #1a1e21; display: flex; align-items: center; gap: 0.5rem;
+}
+.guia-card p, .guia-card li { color: #343a40; font-size: 0.95rem; }
+.guia-card ul, .guia-card ol { padding-left: 1.5rem; margin: 0.75rem 0; }
+.guia-card li { margin-bottom: 0.4rem; }
+.guia-card code {
+  font-family: var(--font-mono); background: #f1f3f5;
+  padding: 0.15rem 0.4rem; border-radius: 4px;
+  font-size: 0.85em; color: #1e1e1e;
+}
+
+/* CONCEITOS */
+.secao-titulo {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #1a1e21;
+  margin: 2rem 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.secao-titulo:first-child { margin-top: 0; }
+
+.conceitos-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.75rem;
+}
+.conceito-card {
+  background: var(--card-bg); border-radius: var(--radius);
+  border: 1px solid var(--border-light); box-shadow: var(--shadow-sm);
+  padding: 1.5rem; display: flex; flex-direction: column;
+}
+.conceito-card h3 {
+  font-size: 1.2rem; font-weight: 600;
+  color: var(--accent); margin-bottom: 0.5rem;
+}
+.conceito-card .explicacao {
+  font-size: 0.95rem; color: #2c3035;
+  margin-bottom: 1rem; flex-grow: 1;
+}
+.conceito-card .code-block { margin-top: 0.5rem; font-size: 0.8rem; }
+
+/* ============================================================
+   BLOQUEIO DE SOLUÇÃO (blur + proteção)
+   ============================================================ */
+.solucao-bloqueada {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  pointer-events: none;
+}
+
+.solucao-bloqueada .code-block {
+  filter: blur(10px);
+  transition: filter 0.2s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
+}
+
+.solucao-bloqueada::after {
+  content: "🔒 Solução bloqueada pela monitoria — compareça ao atendimento para discuti-la";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+  font-family: system-ui, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: rgba(30, 30, 30, 0.55);
+  backdrop-filter: blur(2px);
+  border-radius: 8px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* RESPONSIVO */
+@media (max-width: 800px) {
+  .atividades-grid, .guia-container {
+    grid-template-columns: 1fr; gap: 1.5rem;
+  }
+  .tabs { flex-wrap: wrap; }
+  .tab-btn { padding: 0.6rem 1rem; font-size: 0.9rem; }
+  .header { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+}
+@media (max-width: 480px) {
+  body { padding: 1rem; }
+  .detalhe-exercicio { padding: 1.25rem; }
+  .conceitos-grid { grid-template-columns: 1fr; }
+}
