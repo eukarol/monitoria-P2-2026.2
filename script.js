@@ -794,6 +794,43 @@ public class RadioApp {
   const detalheContainer = document.getElementById('detalheExercicio');
 
   // ============================================================
+  // OFUSCAÇÃO LEVE (XOR + Base64)
+  // Evita que o código apareça como texto legível no DOM.
+  // ============================================================
+  const XOR_KEY = 42;
+
+  function xorEncode(str, key) {
+    let out = '';
+    for (let i = 0; i < str.length; i++) {
+      out += String.fromCharCode(str.charCodeAt(i) ^ key);
+    }
+    return out;
+  }
+
+  function encode(str) {
+    const xored = xorEncode(str, XOR_KEY);
+    return btoa(unescape(encodeURIComponent(xored)));
+  }
+
+  function decode(b64) {
+    const xored = decodeURIComponent(escape(atob(b64)));
+    return xorEncode(xored, XOR_KEY);
+  }
+
+  function escapeHtml(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  // ============================================================
+  // SOLUÇÕES BLOQUEADAS — IDs dos exercícios com exemplo oculto.
+  // Adicione/remova IDs conforme necessário.
+  // ============================================================
+  const SOLUCOES_BLOQUEADAS = new Set([5]); // 5 = Exercício 3 (Rádio)
+
+  // ============================================================
   // RENDERIZAÇÃO DA LISTA LATERAL
   // ============================================================
   function renderListaExercicios() {
@@ -820,10 +857,12 @@ public class RadioApp {
       .map(tag => `<span class="tag">${tag}</span>`)
       .join(' ');
 
-    const codigoEscapado = exercicio.exemplo
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
+    // Codifica o código para não aparecer como texto no DOM,
+    // depois decodifica apenas para inserir como HTML.
+    const codigoBase64 = encode(exercicio.exemplo);
+    const codigoEscapado = escapeHtml(decode(codigoBase64));
+
+    const bloqueado = SOLUCOES_BLOQUEADAS.has(exercicio.id);
 
     detalheContainer.innerHTML = `
       <h2>${exercicio.titulo}</h2>
@@ -835,8 +874,59 @@ public class RadioApp {
         ${exercicio.enunciado}
       </div>
       <h3 style="font-size:1.1rem; margin-bottom:0.5rem; color:#1e1e1e;">💡 Exemplo de solução</h3>
-      <div class="code-block">${codigoEscapado}</div>
+      <div class="${bloqueado ? 'solucao-bloqueada' : ''}">
+        <div class="code-block">${codigoEscapado}</div>
+      </div>
     `;
+
+    if (bloqueado) {
+      protegerSolucao();
+    }
+  }
+
+  // ============================================================
+  // PROTEÇÃO CONTRA REMOÇÃO DO BLUR
+  // ============================================================
+  function protegerSolucao() {
+    const wrap = document.querySelector('.solucao-bloqueada');
+    if (!wrap) return;
+
+    // MutationObserver: se a classe ou o estilo forem alterados,
+    // restauramos o bloqueio.
+    const observer = new MutationObserver(() => {
+      if (!wrap.classList.contains('solucao-bloqueada')) {
+        wrap.classList.add('solucao-bloqueada');
+      }
+      const code = wrap.querySelector('.code-block');
+      if (code) {
+        const blur = getComputedStyle(code).filter;
+        if (!blur || blur === 'none') {
+          code.style.filter = 'blur(10px)';
+        }
+      }
+    });
+
+    observer.observe(wrap, {
+      attributes: true,
+      attributeFilter: ['class', 'style']
+    });
+
+    // Bloqueia atalhos comuns de inspeção
+    document.addEventListener('keydown', (e) => {
+      const k = e.key.toLowerCase();
+      if (
+        e.key === 'F12' ||
+        (e.ctrlKey && e.shiftKey && (k === 'i' || k === 'j' || k === 'c')) ||
+        (e.ctrlKey && k === 'u')
+      ) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+    }, true);
+
+    // Bloqueia clique direito dentro do bloco
+    wrap.addEventListener('contextmenu', (e) => e.preventDefault());
   }
 
   function selecionarExercicio(id) {
@@ -849,7 +939,7 @@ public class RadioApp {
   }
 
   // ============================================================
-  // NAVEGAÇÃO ENTRE ABAS (3 abas)
+  // NAVEGAÇÃO ENTRE ABAS
   // ============================================================
   const tabButtons = document.querySelectorAll('.tab-btn');
   const panels = {
