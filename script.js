@@ -459,7 +459,7 @@ public class BancoMultiplasContas {
         sc.close();
     }
 }`
-
+    },
     {
       id: 5,
       titulo: 'Exercício 3: Rádio com Estações',
@@ -784,7 +784,6 @@ public class RadioApp {
         }
     }
 }`
-    },
     }
   ];
 
@@ -850,7 +849,7 @@ public class RadioApp {
   }
 
   // ============================================================
-  // NAVEGAÇÃO ENTRE ABAS (agora só 3)
+  // NAVEGAÇÃO ENTRE ABAS (3 abas)
   // ============================================================
   const tabButtons = document.querySelectorAll('.tab-btn');
   const panels = {
