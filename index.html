@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monitoria POO · Java</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <!-- CABEÇALHO -->
+  <header class="header">
+    <h1>Monitoria <span>POO · Java</span></h1>
+    <div class="badge-java">☕ Java 17+</div>
+  </header>
+
+  <!-- NAVEGAÇÃO POR ABAS -->
+  <nav class="tabs" id="tabsNav">
+    <button class="tab-btn active" data-tab="atividades">📋 Atividades</button>
+    <button class="tab-btn" data-tab="guia">📘 Guia Java</button>
+    <button class="tab-btn" data-tab="conceitos">🧩 Conceitos</button>
+  </nav>
+
+  <!-- ========== ABA 1: ATIVIDADES ========== -->
+  <section id="panel-atividades" class="panel active">
+    <div class="atividades-grid">
+      <aside class="lista-exercicios">
+        <h3>Exercícios</h3>
+        <div id="exerciciosList"></div>
+      </aside>
+      <div class="detalhe-exercicio" id="detalheExercicio"></div>
+    </div>
+  </section>
+
+  <!-- ========== ABA 2: GUIA JAVA ========== -->
+  <section id="panel-guia" class="panel">
+    <div class="guia-container">
+      <div class="guia-card">
+        <h3>⚙️ Instalando o JDK</h3>
+        <p>Para compilar e executar Java, instale o <strong>JDK (Java Development Kit)</strong>:</p>
+        <ul>
+          <li><strong>Windows/macOS:</strong> baixe em <code>adoptium.net</code> (Eclipse Temurin) ou <code>oracle.com/java</code>.</li>
+          <li><strong>Linux (Debian/Ubuntu):</strong> <code>sudo apt install openjdk-17-jdk</code></li>
+          <li>Verifique com: <code>java -version</code> e <code>javac -version</code></li>
+        </ul>
+      </div>
+      <div class="guia-card">
+        <h3>📦 Compilando e executando</h3>
+        <p>Salve o arquivo como <code>MinhaClasse.java</code> (o nome deve ser igual ao da classe pública).</p>
+        <div class="code-block">
+<span class="comment"># Compilar</span>
+javac MinhaClasse.java
+
+<span class="comment"># Executar</span>
+java MinhaClasse
+        </div>
+        <p>O <code>javac</code> gera o bytecode <code>.class</code>, e <code>java</code> executa na JVM.</p>
+      </div>
+      <div class="guia-card">
+        <h3>🧬 Estrutura do main</h3>
+        <p>O ponto de entrada de qualquer aplicação Java:</p>
+        <div class="code-block">
+public class Principal {
+    public static void main(String[] args) {
+        System.out.println(<span class="string">"Olá, POO!"</span>);
+    }
+}
+        </div>
+        <p><code>public static void main(String[] args)</code> — público, estático, sem retorno, recebe array de Strings.</p>
+      </div>
+      <div class="guia-card">
+        <h3>✏️ Convenções de código</h3>
+        <ul>
+          <li><strong>Classes:</strong> <code>PascalCase</code> (ex: <code>ContaBancaria</code>)</li>
+          <li><strong>Métodos e variáveis:</strong> <code>camelCase</code> (ex: <code>saldoAtual</code>, <code>calcularJuros()</code>)</li>
+          <li><strong>Constantes:</strong> <code>UPPER_SNAKE_CASE</code> (ex: <code>TAXA_JUROS</code>)</li>
+          <li>Pacotes: tudo minúsculo (ex: <code>com.monitoria.poo</code>)</li>
+        </ul>
+      </div>
+      <div class="guia-card">
+        <h3>🐛 Erros comuns</h3>
+        <ul>
+          <li><code>NullPointerException</code> — chamar método em objeto <code>null</code>.</li>
+          <li><code>ArrayIndexOutOfBoundsException</code> — índice fora do array.</li>
+          <li><code>NumberFormatException</code> — conversão inválida (ex: <code>Integer.parseInt("abc")</code>).</li>
+          <li><code>ClassNotFoundException</code> — classe não encontrada no classpath.</li>
+          <li>Erro de compilação: arquivo <code>.java</code> com nome diferente da classe pública.</li>
+        </ul>
+      </div>
+      <div class="guia-card">
+        <h3>🧪 Boas práticas</h3>
+        <ul>
+          <li>Uma classe pública por arquivo <code>.java</code>.</li>
+          <li>Atributos <code>private</code>, acesso via getters/setters.</li>
+          <li>Prefira <code>StringBuilder</code> em loops com muitas concatenações.</li>
+          <li>Use <code>equals()</code> para comparar Strings, nunca <code>==</code>.</li>
+          <li>Comente o <em>porquê</em>, não o <em>o quê</em>.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ABA 3: CONCEITOS ========== -->
+  <section id="panel-conceitos" class="panel">
+    <h2 class="secao-titulo">🔤 Fundamentos da Linguagem</h2>
+    <div class="conceitos-grid">
+      <article class="conceito-card">
+        <h3>Variáveis e Tipos Primitivos</h3>
+        <p class="explicacao">Java é estaticamente tipado — o tipo é declarado. Primitivos: <code>int</code>, <code>double</code>, <code>boolean</code>, <code>char</code>, <code>long</code>. Objetos: <code>String</code>, <code>Integer</code>, etc.</p>
+        <div class="code-block">
+<span class="keyword">int</span> idade = <span class="number">25</span>;
+<span class="keyword">double</span> altura = <span class="number">1.75</span>;
+<span class="keyword">boolean</span> ativo = <span class="keyword">true</span>;
+<span class="keyword">char</span> inicial = <span class="string">'A'</span>;
+String nome = <span class="string">"Ana"</span>;
+        </div>
+      </article>
+
+      <article class="conceito-card">
+        <h3>Operadores</h3>
+        <p class="explicacao">Aritméticos, comparação e lógicos. Destaque para <code>/</code> (divisão), <code>%</code> (resto) e operadores lógicos com curto-circuito <code>&&</code> e <code>||</code>.</p>
+        <div class="code-block">
+<span class="number">7</span> + <span class="number">3</span>    <span class="comment">// 10</span>
+<span class="number">7</span> / <span class="number">2</span>    <span class="comment">// 3 (int)</span>
+<span class="number">7</span> % <span class="number">2</span>    <span class="comment">// 1</span>
+<span class="number">2</span> * <span class="number">3</span>    <span class="comment">// 6</span>
+
+<span class="number">5</span> &gt; <span class="number">3</span> &amp;&amp; <span class="number">2</span> &lt; <span class="number">4</span>  <span class="comment">// true</span>
+!<span class="keyword">true</span>             <span class="comment">// false</span>
+        </div>
+      </article>
+
+      <article class="conceito-card">
+        <h3>Condicionais</h3>
+        <p class="explicacao">Use <code>if</code>, <code>else if</code> e <code>else</code>. Para múltiplos casos exatos, use <code>switch</code> (com <code>break</code>).</p>
+        <div class="code-block">
+<span class="keyword">double</span> nota = <span class="number">7.5</span>;
+<span class="keyword">if</span> (nota &gt;= <span class="number">7</span>) {
+    System.out.println(<span class="string">"Aprovado"</span>);
+} <span class="keyword">else if</span> (nota &gt;= <span class="number">5</span>) {
+    System.out.println(<span class="string">"Recuperação"</span>);
+} <span class="keyword">else</span> {
+    System.out.println(<span class="string">"Reprovado"</span>);
+}
+        </div>
+      </article>
+
+      <article class="conceito-card">
+        <h3>Loops</h3>
+        <p class="explicacao"><code>for</code>, <code>while</code> e <code>do-while</code>. Use <code>break</code> para sair e <code>continue</code> para pular a iteração.</p>
+        <div class="code-block">
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) {
+    System.out.println(i);
+}
+
+<span class="keyword">int</span> n = <span class="number">0</span>;
+<span class="keyword">while</span> (n &lt; <span class="number">3</span>) {
+    System.out.println(n);
+    n++;
+}
+        </div>
+      </article>
+
+      <article class="conceito-card">
+        <h3>Strings</h3>
+        <p class="explicacao"><code>String</code> é imutável em Java. Use <code>equals()</code> para comparar conteúdo. Métodos úteis: <code>length()</code>, <code>substring()</code>, <code>toUpperCase()</code>, <code>split()</code>.</p>
+        <div class="code-block">
+String texto = <span class="string">"Olá, Java!"</span>;
+System.out.println(texto.length());       <span class="comment">// 10</span>
+System.out.println(texto.toUpperCase());  <span class="comment">// OLÁ, JAVA!</span>
+System.out.println(texto.substring(<span class="number">0</span>, <span class="number">3</span>)); <span class="comment">// Olá</span>
+
+<span class="comment">// Comparação correta:</span>
+<span class="keyword">if</span> (texto.equals(<span class="string">"Olá, Java!"</span>)) { ... }
+        </div>
+      </article>
+
+      <article class="conceito-card">
+        <h3>Entrada e Saída</h3>
+        <p class="explicacao">Saída com <code>System.out.println()</code>. Entrada com <code>Scanner</code> — lembre de importar <code>java.util.Scanner</code>.</p>
+        <div class="code-block">
+<span class="keyword">import</span> java.util.Scanner;
+
+Scanner sc = <span class="keyword">new</span> Scanner(System.in);
+System.out.print(<span class="string">"Nome: "</span>);
+String nome = sc.nextLine();
+System.out.print(<span class="string">"Idade: "</span>);
+<span class="keyword">int</span> idade = sc.nextInt();
+System.out.println(nome + <span class="string">" tem "</span> + idade + <span class="string">" anos"</span>);
+        </div>
+      </article>
+    </div>
+
+    <h2 class="secao-titulo">🗂️ Estruturas de Dados</h2>
+    <div class="conceitos-grid">
+      <article class="conceito-card">
+        <h3>Arrays</h3>
+        <p class="explicacao">Tamanho fixo, tipo único. Índices começam em 0. Acesse com <code>array[i]</code> e descubra o tamanho com <code>array.length</code>.</p>
+        <div class="code-block">
+<span class="keyword">int</span>[] nums = {<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>};
+System.out.println(nums[<span class="number">0</span>]);      <span class="comment">// 10</span>
+System.out.println(nums.length);   <span class="comment">// 3</span>
+
+<span class="keyword">for</span> (<span class="keyword">int</span> n : nums) {
+    System.out.println(n);
+}
+        </div>
+      </article>
+
+      <article class="conceito-card">
+        <h3>ArrayList</h3>
+        <p class="explicacao">Lista dinâmica da biblioteca padrão. Aceita apenas objetos (use wrappers como <code>Integer</code>). Métodos: <code>add</code>, <code>get</code>, <code>remove</code>, <code>size</code>.</p>
+        <div class="code-block">
+<span class="keyword">import</span> java.util.ArrayList;
+
+ArrayList&lt;String&gt; frutas = <span class="keyword">new</span> ArrayList&lt;&gt;();
+frutas.add(<span class="string">"maçã"</span>);
+frutas.add(<span class="string">"banana"</span>);
+System.out.println(frutas.get(<span class="number">0</span>));  <span class="comment">// maçã</span>
+System.out.println(frutas.size());  <span class="comment">// 2</span>
+        </div>
+      </article>
+
+      <article class="conceito-card">
+        <h3>HashMap</h3>
+        <p class="explicacao">Pares chave-valor com acesso O(1). Métodos: <code>put</code>, <code>get</code>, <code>containsKey</code>, <code>keySet</code>.</p>
+        <div class="code-block">
+<span class="keyword">import</span> java.util.HashMap;
+
+HashMap&lt;String, Integer&gt; idades = <span class="keyword">new</span> HashMap&lt;&gt;();
+idades.put(<span class="string">"Ana"</span>, <span class="number">25</span>);
+idades.put(<span class="string">"Bruno"</span>, <span class="number">30</span>);
+System.out.println(idades.get(<span class="string">"Ana"</span>));  <span class="comment">// 25</span>
+System.out.println(idades.containsKey(<span class="string">"Ana"</span>)); <span class="comment">// true</span>
+        </div>
+      </article>
+
+      <article class="conceito-card">
+        <h3>HashSet</h3>
+        <p class="explicacao">Conjunto <strong>sem duplicatas</strong>. Útil para remover repetições e testar pertencimento com <code>contains</code>.</p>
+        <div class="code-block">
+<span class="keyword">import</span> java.util.HashSet;
+
+HashSet&lt;String&gt; tags = <span class="keyword">new</span> HashSet&lt;&gt;();
+tags.add(<span class="string">"java"</span>);
+tags.add(<span class="string">"java"</span>);  <span class="comment">// ignorado</span>
+System.out.println(tags.size());  <span class="comment">// 1</span>
+        </div>
+      </article>
+
+      <article class="conceito-card">
+        <h3>Enums</h3>
+        <p class="explicacao">Tipo com conjunto fixo de constantes. Ideal para naipes, dias da semana, status, etc.</p>
+        <div class="code-block">
+<span class="keyword">enum</span> Naipe { HEARTS, DIAMONDS, CLUBS, SPADES }
+
+Naipe n = Naipe.HEARTS;
+System.out.println(n);              <span class="comment">// HEARTS</span>
+System.out.println(n.ordinal());    <span class="comment">// 0</span>
+
+<span class="keyword">for</span> (Naipe x : Naipe.values()) {
+    System.out.println(x);
+}
+        </div>
+      </article>
+
+      <article class="conceito-card">
+        <h3>For-each e Iteração</h3>
+        <p class="explicacao">O for-each simplifica a iteração sobre arrays e coleções. Também funciona com <code>Map.entrySet()</code>.</p>
+        <div class="code-block">
+String[] nomes = {<span class="string">"Ana"</span>, <span class="string">"Bruno"</span>};
+<span class="keyword">for</span> (String n : nomes) {
+    System.out.println(n);
+}
+
+<span class="comment">// Em um Map:</span>
+<span class="keyword">for</span> (var e : idades.entrySet()) {
+    System.out.println(e.getKey() + <span class="string">" = "</span> + e.getValue());
+}
+        </div>
+      </article>
+    </div>
+
+    <h2 class="secao-titulo">🧩 Métodos e Modularização</h2>
+    <div class="conceitos-grid">
+      <article class="conceito-card">
+        <h3>Métodos</h3>
+        <p class="explicacao">Blocos reutilizáveis dentro de uma classe. Declaram tipo de retorno, nome e parâmetros. Use <code>void</code> se não retornar nada.</p>
+        <div class="code-block">
+<span class="keyword">public static int</span> somar(<span class="keyword">int</span> a, <span class="keyword">int</span> b) {
+    <span class="keyword">return</span> a + b;
+}
+
+<span class="keyword">public static void</span> saudar(String nome) {
+    System.out.println(<span class="string">"Olá, "</span> + nome);
+}
+        </div>
+      </article>
+
+      <article class="conceito-card">
+        <h3>static vs instância</h3>
+        <p class="explicacao"><code>static</code> pertence à classe; sem <code>static</code> pertence ao objeto. O <code>main</code> é sempre <code>static</code>.</p>
+        <div class="code-block">
+<span class="keyword">class</span> <span class="type">Contador</span> {
+    <span class="keyword">static int</span> total = <span class="number">0</span>;
+    <span class="keyword">int</span> id;
+
+    Contador() {
+        total++;
+        id = total;
+    }
+}
+        </div>
+      </article>
+
+      <article class="conceito-card">
+        <h3>Tratamento de Exceções</h3>
+        <p class="explicacao"><code>try/catch/finally</code> captura erros e evita que o programa quebre. Exceções verificadas exigem tratamento ou <code>throws</code>.</p>
+        <div class="code-block">
+<span class="keyword">try</span> {
+    <span class="keyword">int</span> num = Integer.parseInt(<span class="string">"abc"</span>);
+    System.out.println(<span class="number">10</span> / num);
+} <span class="keyword">catch</span> (NumberFormatException e) {
+    System.out.println(<span class="string">"Número inválido!"</span>);
+} <span class="keyword">catch</span> (ArithmeticException e) {
+    System.out.println(<span class="string">"Divisão por zero!"</span>);
+} <span class="keyword">finally</span> {
+    System.out.println(<span class="string">"Fim."</span>);
+}
+        </div>
+      </article>
+
+      <article class="conceito-card">
+        <h3>Pacotes e imports</h3>
+        <p class="explicacao">Pacotes organizam classes. Use <code>import</code> para acessar classes de outros pacotes. O pacote padrão é <code>java.lang</code>.</p>
+        <div class="code-block">
+<span class="keyword">package</span> com.monitoria.poo;
+
+<span class="keyword">import</span> java.util.Scanner;
+<span class="keyword">import</span> java.util.ArrayList;
+
+<span class="keyword">public class</span> <span class="type">Principal</span> {
+    <span class="comment">// ...</span>
+}
+        </div>
+      </article>
+
+      <article class="conceito-card">
+        <h3>Leitura de Arquivos</h3>
+        <p class="explicacao">Use <code>Files</code> e <code>Path</code> (Java NIO) para ler e escrever arquivos. Mais moderno que <code>FileReader</code>.</p>
+        <div class="code-block">
+<span class="keyword">import</span> java.nio.file.*;
+<span class="keyword">import</span> java.io.IOException;
+
+<span class="keyword">try</span> {
+    Files.writeString(Path.of(<span class="string">"dados.txt"</span>), <span class="string">"Olá\n"</span>);
+    String conteudo = Files.readString(Path.of(<span class="string">"dados.txt"</span>));
+    System.out.println(conteudo);
+} <span class="keyword">catch</span> (IOException e) {
+    e.printStackTrace();
+}
+        </div>
+      </article>
+
+      <article class="conceito-card">
+        <h3>Generics</h3>
+        <p class="explicacao">Permitem classes e métodos parametrizados por tipo, garantindo segurança em tempo de compilação.</p>
+        <div class="code-block">
+<span class="keyword">class</span> <span class="type">Caixa</span>&lt;T&gt; {
+    <span class="keyword">private</span> T valor;
+    <span class="keyword">public void</span> guardar(T v) { valor = v; }
+    <span class="keyword">public</span> T pegar() { <span class="keyword">return</span> valor; }
+}
+
+Caixa&lt;String&gt; c = <span class="keyword">new</span> Caixa&lt;&gt;();
+c.guardar(<span class="string">"Olá"</span>);
+System.out.println(c.pegar());
+        </div>
+      </article>
+    </div>
+
+    <h2 class="secao-titulo">🏛️ Programação Orientada a Objetos</h2>
+    <div class="conceitos-grid">
+      <article class="conceito-card">
+        <h3>Classes e Objetos</h3>
+        <p class="explicacao">Classe é o molde (atributos e métodos). Objeto é a instância concreta criada com <code>new</code>. O construtor tem o mesmo nome da classe.</p>
+        <div class="code-block">
+<span class="keyword">public class</span> <span class="type">Cachorro</span> {
+    String nome;
+
+    <span class="keyword">public</span> Cachorro(String nome) {
+        <span class="keyword">this</span>.nome = nome;
+    }
+
+    <span class="keyword">public void</span> latir() {
+        System.out.println(nome + <span class="string">": Au au!"</span>);
+    }
+
+    <span class="keyword">public static void</span> main(String[] args) {
+        Cachorro rex = <span class="keyword">new</span> Cachorro(<span class="string">"Rex"</span>);
+        rex.latir();
+    }
+}
+        </div>
+      </article>
+
+      <article class="conceito-card">
+        <h3>Encapsulamento</h3>
+        <p class="explicacao">Protege dados internos com <code>private</code> e expõe via <code>public</code> getters/setters. Controla o acesso e mantém invariantes.</p>
+        <div class="code-block">
+<span class="keyword">public class</span> <span class="type">Conta</span> {
+    <span class="keyword">private double</span> saldo;
+
+    <span class="keyword">public double</span> getSaldo() {
+        <span class="keyword">return</span> saldo;
+    }
+
+    <span class="keyword">public void</span> depositar(<span class="keyword">double</span> valor) {
+        <span class="keyword">if</span> (valor &gt; <span class="number">0</span>) saldo += valor;
+    }
+}
+        </div>
+      </article>
+
+      <article class="conceito-card">
+        <h3>Herança</h3>
+        <p class="explicacao">Uma classe herda atributos e métodos de outra com <code>extends</code>. Use <code>super(...)</code> para chamar o construtor da superclasse.</p>
+        <div class="code-block">
+<span class="keyword">public class</span> <span class="type">Animal</span> {
+    <span class="keyword">public void</span> comer() {
+        System.out.println(<span class="string">"Comendo..."</span>);
+    }
+}
+
+<span class="keyword">public class</span> <span class="type">Gato</span> <span class="keyword">extends</span> Animal {
+    <span class="keyword">public void</span> miar() {
+        System.out.println(<span class="string">"Miau!"</span>);
+    }
+}
+        </div>
+      </article>
+
+      <article class="conceito-card">
+        <h3>Polimorfismo</h3>
+        <p class="explicacao">Uma referência da superclasse pode apontar para objetos da subclasse. O método executado é o da subclasse (sobrescrita com <code>@Override</code>).</p>
+        <div class="code-block">
+<span class="keyword">class</span> <span class="type">Animal</span> {
+    <span class="keyword">public void</span> falar() {
+        System.out.println(<span class="string">"..."</span>);
+    }
+}
+
+<span class="keyword">class</span> <span class="type">Cao</span> <span class="keyword">extends</span> Animal {
+    <span class="annotation">@Override</span>
+    <span class="keyword">public void</span> falar() {
+        System.out.println(<span class="string">"Woof"</span>);
+    }
+}
+
+Animal a = <span class="keyword">new</span> Cao();
+a.falar();  <span class="comment">// Woof</span>
+        </div>
+      </article>
+
+      <article class="conceito-card">
+        <h3>Classes Abstratas</h3>
+        <p class="explicacao">Definem contratos parciais. Não podem ser instanciadas. Métodos abstratos devem ser implementados pelas subclasses.</p>
+        <div class="code-block">
+<span class="keyword">public abstract class</span> <span class="type">Forma</span> {
+    <span class="keyword">public abstract double</span> area();
+}
+
+<span class="keyword">public class</span> <span class="type">Circulo</span> <span class="keyword">extends</span> Forma {
+    <span class="keyword">private double</span> raio;
+
+    <span class="keyword">public</span> Circulo(<span class="keyword">double</span> raio) {
+        <span class="keyword">this</span>.raio = raio;
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="keyword">public double</span> area() {
+        <span class="keyword">return</span> Math.PI * raio * raio;
+    }
+}
+        </div>
+      </article>
+
+      <article class="conceito-card">
+        <h3>Interfaces</h3>
+        <p class="explicacao">Contratos puros com métodos abstratos (e <code>default</code>). Uma classe pode implementar várias interfaces — herança múltipla de tipo.</p>
+        <div class="code-block">
+<span class="keyword">public interface</span> <span class="type">Imprimivel</span> {
+    <span class="keyword">void</span> imprimir();
+}
+
+<span class="keyword">public class</span> <span class="type">Relatorio</span> <span class="keyword">implements</span> Imprimivel {
+    <span class="annotation">@Override</span>
+    <span class="keyword">public void</span> imprimir() {
+        System.out.println(<span class="string">"Imprimindo..."</span>);
+    }
+}
+        </div>
+      </article>
+    </div>
+  </section>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
