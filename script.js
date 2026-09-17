@@ -459,6 +459,332 @@ public class BancoMultiplasContas {
         sc.close();
     }
 }`
+
+    {
+      id: 5,
+      titulo: 'Exercício 3: Rádio com Estações',
+      dificuldade: 'Difícil',
+      tags: ['#Encapsulamento', '#Composição', '#Arrays', '#POO'],
+      enunciado: `
+        <p><strong>Objetivo:</strong> Praticar <strong>encapsulamento</strong> e <strong>composição de classes</strong> criando um sistema que simula um rádio com múltiplas estações, cada uma com sua playlist.</p>
+        <p><strong>⚠️ Atenção:</strong> o foco central é o <strong>uso rigoroso dos modificadores de acesso</strong> (<code>public</code>, <code>private</code>) conforme especificado.</p>
+
+        <p><strong>Classe <code>Musica</code></strong></p>
+        <ul>
+          <li><code>titulo</code> → <code>public String</code></li>
+          <li><code>artista</code> → <code>public String</code></li>
+          <li><code>genero</code> → <code>public String</code></li>
+          <li><code>duracaoSegundos</code> → <code>private int</code></li>
+          <li>Construtor com todos os atributos.</li>
+          <li><code>getDuracaoFormatada()</code> → retorna <code>"mm:ss"</code> usando <code>/</code> e <code>%</code> (ex: 195s → <code>"03:15"</code>).</li>
+        </ul>
+
+        <p><strong>Classe <code>Estacao</code></strong></p>
+        <ul>
+          <li><code>frequencia</code> → <code>public String</code> (ex: <code>"89.1 FM"</code>)</li>
+          <li><code>genero</code> → <code>public String</code></li>
+          <li><code>playlist</code> → <code>public Musica[]</code></li>
+          <li>Construtor com os três atributos.</li>
+        </ul>
+
+        <p><strong>Classe <code>Radio</code></strong> — todos os atributos <strong>privados</strong>:</p>
+        <ul>
+          <li><code>estacoes</code> → <code>Estacao[]</code></li>
+          <li><code>estacaoAtual</code> → <code>int</code></li>
+          <li><code>musicaAtual</code> → <code>int</code></li>
+          <li><code>volume</code> → <code>int</code> (0 a 100)</li>
+          <li><code>ligado</code> → <code>boolean</code></li>
+          <li><code>tocando</code> → <code>boolean</code></li>
+        </ul>
+        <p>Construtor: rádio <strong>desligado</strong>, volume <strong>50</strong>, estação <strong>0</strong>, música <strong>0</strong>.</p>
+
+        <p><strong>Métodos de negócio:</strong> <code>ligar()</code>, <code>desligar()</code>, <code>tocar()</code>, <code>pausar()</code>, <code>aumentarVolume(int)</code> (limite 100 via <code>Math.min</code>), <code>diminuirVolume(int)</code> (limite 0 via <code>Math.max</code>), <code>trocarEstacao(int)</code>, <code>proximaMusica()</code> (avanço circular com <code>%</code>), <code>getStatus()</code> (usar <code>StringBuilder</code>), <code>isLigado()</code>, <code>isTocando()</code>.</p>
+
+        <p><strong>Classe <code>RadioApp</code> (main):</strong> menu com <code>Scanner</code> em loop:</p>
+        <ul>
+          <li>1 - Ligar / Desligar rádio</li>
+          <li>2 - Tocar / Pausar</li>
+          <li>3 - Aumentar volume</li>
+          <li>4 - Diminuir volume</li>
+          <li>5 - Trocar estação (exibir lista antes)</li>
+          <li>6 - Próxima música</li>
+          <li>7 - Ver status</li>
+          <li>8 - Sair</li>
+        </ul>
+        <p><strong>Massa de dados:</strong> pelo menos 3 estações, cada uma com 2+ músicas.</p>
+      `,
+      exemplo: `import java.util.Scanner;
+
+// ============================================================
+// CLASSE Musica
+// ============================================================
+class Musica {
+    public String titulo;
+    public String artista;
+    public String genero;
+    private int duracaoSegundos;
+
+    public Musica(String titulo, String artista, String genero, int duracaoSegundos) {
+        this.titulo = titulo;
+        this.artista = artista;
+        this.genero = genero;
+        this.duracaoSegundos = duracaoSegundos;
+    }
+
+    public String getDuracaoFormatada() {
+        int minutos = duracaoSegundos / 60;
+        int segundos = duracaoSegundos % 60;
+        return String.format("%02d:%02d", minutos, segundos);
+    }
+
+    public int getDuracaoSegundos() {
+        return duracaoSegundos;
+    }
+}
+
+// ============================================================
+// CLASSE Estacao
+// ============================================================
+class Estacao {
+    public String frequencia;
+    public String genero;
+    public Musica[] playlist;
+
+    public Estacao(String frequencia, String genero, Musica[] playlist) {
+        this.frequencia = frequencia;
+        this.genero = genero;
+        this.playlist = playlist;
+    }
+}
+
+// ============================================================
+// CLASSE Radio
+// ============================================================
+class Radio {
+    private Estacao[] estacoes;
+    private int estacaoAtual;
+    private int musicaAtual;
+    private int volume;
+    private boolean ligado;
+    private boolean tocando;
+
+    public Radio(Estacao[] estacoes) {
+        this.estacoes = estacoes;
+        this.estacaoAtual = 0;
+        this.musicaAtual = 0;
+        this.volume = 50;
+        this.ligado = false;
+        this.tocando = false;
+    }
+
+    public void ligar() {
+        if (ligado) {
+            System.out.println("O rádio já está ligado.");
+        } else {
+            ligado = true;
+            System.out.println("Rádio ligado.");
+        }
+    }
+
+    public void desligar() {
+        if (!ligado) {
+            System.out.println("O rádio já está desligado.");
+            return;
+        }
+        ligado = false;
+        tocando = false;
+        System.out.println("Rádio desligado.");
+    }
+
+    public void tocar() {
+        if (!ligado) {
+            System.out.println("É necessário ligar o rádio primeiro.");
+            return;
+        }
+        tocando = true;
+        Musica m = musicaAtual();
+        System.out.println("Tocando: " + m.titulo + " — " + m.artista
+                + " (" + m.getDuracaoFormatada() + ")");
+    }
+
+    public void pausar() {
+        if (!ligado) {
+            System.out.println("É necessário ligar o rádio primeiro.");
+            return;
+        }
+        if (!tocando) {
+            System.out.println("A música já está pausada.");
+            return;
+        }
+        tocando = false;
+        System.out.println("Música pausada.");
+    }
+
+    public void aumentarVolume(int incremento) {
+        if (incremento <= 0) {
+            System.out.println("O incremento deve ser positivo.");
+            return;
+        }
+        volume = Math.min(100, volume + incremento);
+        System.out.println("Volume: " + volume);
+    }
+
+    public void diminuirVolume(int incremento) {
+        if (incremento <= 0) {
+            System.out.println("O incremento deve ser positivo.");
+            return;
+        }
+        volume = Math.max(0, volume - incremento);
+        System.out.println("Volume: " + volume);
+    }
+
+    public void trocarEstacao(int numeroEstacao) {
+        if (numeroEstacao < 0 || numeroEstacao >= estacoes.length) {
+            System.out.println("Estação inválida!");
+            return;
+        }
+        estacaoAtual = numeroEstacao;
+        musicaAtual = 0;
+        System.out.println("Sintonizado em " + estacoes[estacaoAtual].frequencia
+                + " — " + estacoes[estacaoAtual].genero);
+        if (tocando) {
+            tocar();
+        }
+    }
+
+    public void proximaMusica() {
+        if (!ligado) {
+            System.out.println("É necessário ligar o rádio primeiro.");
+            return;
+        }
+        Musica[] playlist = estacoes[estacaoAtual].playlist;
+        musicaAtual = (musicaAtual + 1) % playlist.length;
+        if (tocando) {
+            tocar();
+        } else {
+            System.out.println("Próxima faixa: " + musicaAtual().titulo);
+        }
+    }
+
+    private Musica musicaAtual() {
+        return estacoes[estacaoAtual].playlist[musicaAtual];
+    }
+
+    public String getStatus() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("=== STATUS DO RÁDIO ===\\n");
+        sb.append("Energia: ").append(ligado ? "LIGADO" : "DESLIGADO").append("\\n");
+        if (ligado) {
+            Estacao e = estacoes[estacaoAtual];
+            sb.append("Estação: ").append(e.frequencia)
+              .append(" (").append(e.genero).append(")\\n");
+            Musica m = musicaAtual();
+            sb.append("Faixa: ").append(m.titulo)
+              .append(" — ").append(m.artista)
+              .append(" [").append(m.getDuracaoFormatada()).append("]");
+            sb.append(tocando ? " ▶ tocando\\n" : " ⏸ pausada\\n");
+        }
+        sb.append("Volume: ").append(volume);
+        return sb.toString();
+    }
+
+    public boolean isLigado()  { return ligado; }
+    public boolean isTocando() { return tocando; }
+}
+
+// ============================================================
+// CLASSE PRINCIPAL
+// ============================================================
+public class RadioApp {
+
+    public static void main(String[] args) {
+        // Massa de dados: 3 estações, 2 músicas cada
+        Musica[] pop = {
+            new Musica("Blinding Lights", "The Weeknd", "Pop", 200),
+            new Musica("Levitating", "Dua Lipa", "Pop", 203)
+        };
+        Musica[] rock = {
+            new Musica("Bohemian Rhapsody", "Queen", "Rock", 355),
+            new Musica("Smells Like Teen Spirit", "Nirvana", "Rock", 301)
+        };
+        Musica[] mpb = {
+            new Musica("Aquarela", "Toquinho", "MPB", 235),
+            new Musica("Construção", "Chico Buarque", "MPB", 195)
+        };
+
+        Estacao[] estacoes = {
+            new Estacao("89.1 FM", "Pop", pop),
+            new Estacao("94.7 FM", "Rock", rock),
+            new Estacao("102.3 FM", "MPB", mpb)
+        };
+
+        Radio radio = new Radio(estacoes);
+        Scanner sc = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("\\n=== MENU ===");
+            System.out.println("1 - Ligar / Desligar rádio");
+            System.out.println("2 - Tocar / Pausar");
+            System.out.println("3 - Aumentar volume");
+            System.out.println("4 - Diminuir volume");
+            System.out.println("5 - Trocar estação");
+            System.out.println("6 - Próxima música");
+            System.out.println("7 - Ver status");
+            System.out.println("8 - Sair");
+            System.out.print("Opção: ");
+            String opt = sc.nextLine();
+
+            switch (opt) {
+                case "1":
+                    if (radio.isLigado()) radio.desligar();
+                    else radio.ligar();
+                    break;
+
+                case "2":
+                    if (radio.isTocando()) radio.pausar();
+                    else radio.tocar();
+                    break;
+
+                case "3":
+                    System.out.print("Incremento: ");
+                    radio.aumentarVolume(Integer.parseInt(sc.nextLine()));
+                    break;
+
+                case "4":
+                    System.out.print("Decremento: ");
+                    radio.diminuirVolume(Integer.parseInt(sc.nextLine()));
+                    break;
+
+                case "5":
+                    System.out.println("Estações disponíveis:");
+                    for (int i = 0; i < estacoes.length; i++) {
+                        System.out.println("  [" + i + "] " + estacoes[i].frequencia
+                                + " — " + estacoes[i].genero);
+                    }
+                    System.out.print("Escolha o índice: ");
+                    radio.trocarEstacao(Integer.parseInt(sc.nextLine()));
+                    break;
+
+                case "6":
+                    radio.proximaMusica();
+                    break;
+
+                case "7":
+                    System.out.println(radio.getStatus());
+                    break;
+
+                case "8":
+                    System.out.println("Encerrando...");
+                    sc.close();
+                    return;
+
+                default:
+                    System.out.println("Opção inválida!");
+            }
+        }
+    }
+}`
+    },
     }
   ];
 
