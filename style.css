@@ -209,6 +209,48 @@ body {
 }
 .conceito-card .code-block { margin-top: 0.5rem; font-size: 0.8rem; }
 
+/* ============================================================
+   BLOQUEIO DE SOLUÇÃO (blur + proteção)
+   ============================================================ */
+.solucao-bloqueada {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  pointer-events: none;
+}
+
+.solucao-bloqueada .code-block {
+  filter: blur(10px);
+  transition: filter 0.2s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
+}
+
+.solucao-bloqueada::after {
+  content: "🔒 Solução bloqueada pela monitoria — compareça ao atendimento para discuti-la";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+  font-family: system-ui, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: rgba(30, 30, 30, 0.55);
+  backdrop-filter: blur(2px);
+  border-radius: 8px;
+  pointer-events: none;
+  z-index: 5;
+}
+
 /* RESPONSIVO */
 @media (max-width: 800px) {
   .atividades-grid, .guia-container {
