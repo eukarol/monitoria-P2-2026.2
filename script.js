@@ -466,52 +466,88 @@ public class BancoMultiplasContas {
       dificuldade: 'Difícil',
       tags: ['#Encapsulamento', '#Composição', '#Arrays', '#POO'],
       enunciado: `
-        <p><strong>Objetivo:</strong> Praticar <strong>encapsulamento</strong> e <strong>composição de classes</strong> criando um sistema que simula um rádio com múltiplas estações, cada uma com sua playlist.</p>
-        <p><strong>⚠️ Atenção:</strong> o foco central é o <strong>uso rigoroso dos modificadores de acesso</strong> (<code>public</code>, <code>private</code>) conforme especificado.</p>
+        <h3>1. Objetivo</h3>
+        <p>Praticar conceitos de <strong>Orientação a Objetos em Java</strong> através da criação e integração das classes <code>Musica</code>, <code>Estacao</code> e <code>Radio</code>.</p>
+        <p>O sistema simula o funcionamento de um rádio com múltiplas estações, onde cada estação possui uma playlist de músicas. O usuário poderá ligar e desligar o aparelho, tocar, pausar, alternar entre estações, pular músicas e ajustar o volume.</p>
+        <p class="aviso-importante">⚠️ <strong>Atenção:</strong> atente-se ao uso rigoroso dos modificadores de acesso (<code>public</code>, <code>private</code>, <code>protected</code>) especificados para cada atributo, pois o <strong>encapsulamento é o foco central</strong> deste exercício.</p>
 
-        <p><strong>Classe <code>Musica</code></strong></p>
+        <h3>2. Especificação das Classes</h3>
+
+        <h4>2.1. Classe <code>Musica</code></h4>
         <ul>
           <li><code>titulo</code> → <code>public String</code></li>
           <li><code>artista</code> → <code>public String</code></li>
-          <li><code>genero</code> → <code>public String</code></li>
-          <li><code>duracaoSegundos</code> → <code>private int</code></li>
-          <li>Construtor com todos os atributos.</li>
-          <li><code>getDuracaoFormatada()</code> → retorna <code>"mm:ss"</code> usando <code>/</code> e <code>%</code> (ex: 195s → <code>"03:15"</code>).</li>
+          <li><code>genero</code> → <code>public String</code> (ex.: <code>"Pop"</code>, <code>"Rock"</code>, <code>"MPB"</code>)</li>
+          <li><code>duracaoSegundos</code> → <code>private int</code> (duração em segundos)</li>
         </ul>
-
-        <p><strong>Classe <code>Estacao</code></strong></p>
+        <p><strong>Construtor e métodos:</strong></p>
         <ul>
-          <li><code>frequencia</code> → <code>public String</code> (ex: <code>"89.1 FM"</code>)</li>
-          <li><code>genero</code> → <code>public String</code></li>
-          <li><code>playlist</code> → <code>public Musica[]</code></li>
-          <li>Construtor com os três atributos.</li>
+          <li><code>Musica(String titulo, String artista, String genero, int duracaoSegundos)</code> — inicializa todos os atributos.</li>
+          <li><code>public String getDuracaoFormatada()</code> — retorna a duração no formato <code>"mm:ss"</code> (ex.: 195s → <code>"03:15"</code>). Calcule os minutos e segundos com os operadores de divisão (<code>/</code>) e resto (<code>%</code>).</li>
         </ul>
+        <p><em>Dica:</em> utilize <code>String.format("%02d:%02d", minutos, segundos)</code>.</p>
 
-        <p><strong>Classe <code>Radio</code></strong> — todos os atributos <strong>privados</strong>:</p>
+        <h4>2.2. Classe <code>Estacao</code></h4>
+        <p>Classe auxiliar para agrupamento de dados de uma estação:</p>
         <ul>
-          <li><code>estacoes</code> → <code>Estacao[]</code></li>
-          <li><code>estacaoAtual</code> → <code>int</code></li>
-          <li><code>musicaAtual</code> → <code>int</code></li>
-          <li><code>volume</code> → <code>int</code> (0 a 100)</li>
-          <li><code>ligado</code> → <code>boolean</code></li>
-          <li><code>tocando</code> → <code>boolean</code></li>
+          <li><code>frequencia</code> → <code>public String</code> (ex.: <code>"89.1 FM"</code>)</li>
+          <li><code>genero</code> → <code>public String</code> (ex.: <code>"Pop"</code>)</li>
+          <li><code>playlist</code> → <code>public Musica[]</code> (array com as músicas disponíveis)</li>
         </ul>
-        <p>Construtor: rádio <strong>desligado</strong>, volume <strong>50</strong>, estação <strong>0</strong>, música <strong>0</strong>.</p>
-
-        <p><strong>Métodos de negócio:</strong> <code>ligar()</code>, <code>desligar()</code>, <code>tocar()</code>, <code>pausar()</code>, <code>aumentarVolume(int)</code> (limite 100 via <code>Math.min</code>), <code>diminuirVolume(int)</code> (limite 0 via <code>Math.max</code>), <code>trocarEstacao(int)</code>, <code>proximaMusica()</code> (avanço circular com <code>%</code>), <code>getStatus()</code> (usar <code>StringBuilder</code>), <code>isLigado()</code>, <code>isTocando()</code>.</p>
-
-        <p><strong>Classe <code>RadioApp</code> (main):</strong> menu com <code>Scanner</code> em loop:</p>
+        <p><strong>Construtor:</strong></p>
         <ul>
-          <li>1 - Ligar / Desligar rádio</li>
-          <li>2 - Tocar / Pausar</li>
-          <li>3 - Aumentar volume</li>
-          <li>4 - Diminuir volume</li>
-          <li>5 - Trocar estação (exibir lista antes)</li>
-          <li>6 - Próxima música</li>
-          <li>7 - Ver status</li>
-          <li>8 - Sair</li>
+          <li><code>Estacao(String frequencia, String genero, Musica[] playlist)</code> — inicializa os três atributos.</li>
         </ul>
-        <p><strong>Massa de dados:</strong> pelo menos 3 estações, cada uma com 2+ músicas.</p>
+
+        <h4>2.3. Classe <code>Radio</code></h4>
+        <p><strong>Atributos privados (encapsulados):</strong></p>
+        <ul>
+          <li><code>estacoes</code> → <code>private Estacao[]</code></li>
+          <li><code>estacaoAtual</code> → <code>private int</code> (índice da estação sintonizada)</li>
+          <li><code>musicaAtual</code> → <code>private int</code> (índice da música na playlist atual)</li>
+          <li><code>volume</code> → <code>private int</code> (escala de 0 a 100)</li>
+          <li><code>ligado</code> → <code>private boolean</code></li>
+          <li><code>tocando</code> → <code>private boolean</code></li>
+        </ul>
+        <p><strong>Construtor:</strong> <code>Radio(Estacao[] estacoes)</code> deve inicializar o rádio <strong>desligado</strong>, com volume em <strong>50</strong>, sintonizado na estação de <strong>índice 0</strong> e posicionado na <strong>primeira música</strong> da playlist.</p>
+
+        <p><strong>Métodos e regras de negócio:</strong></p>
+        <ul>
+          <li><code>public void ligar()</code> — define <code>ligado = true</code> e exibe confirmação. Caso já esteja ligado, apenas avise o usuário.</li>
+          <li><code>public void desligar()</code> — define <code>ligado = false</code> e interrompe a execução (<code>tocando = false</code>).</li>
+          <li><code>public void tocar()</code> — se desligado, informe que é necessário ligar. Caso contrário, define <code>tocando = true</code> e exibe o título, artista e duração formatada da música atual.</li>
+          <li><code>public void pausar()</code> — se desligado ou já pausado, exiba o aviso correspondente. Caso contrário, define <code>tocando = false</code> e confirma a pausa.</li>
+          <li><code>public void aumentarVolume(int incremento)</code> — valida se o incremento é positivo. Aumenta o volume respeitando o limite máximo de 100 (dica: <code>Math.min</code>).</li>
+          <li><code>public void diminuirVolume(int incremento)</code> — reduz o volume garantindo que não fique abaixo de 0 (dica: <code>Math.max</code>).</li>
+          <li><code>public void trocarEstacao(int numeroEstacao)</code> — valida o índice informado. Se inválido, exibe <code>"Estação inválida!"</code>. Se válido, altera <code>estacaoAtual</code>, reinicia <code>musicaAtual</code> para 0 e, se estiver tocando, apresenta a nova faixa.</li>
+          <li><code>public void proximaMusica()</code> — se desligado, solicita a ligação prévia. Caso contrário, avança a música de forma circular no array (dica: operador <code>%</code>) e exibe a nova música.</li>
+          <li><code>public String getStatus()</code> — retorna o estado completo do rádio (estado de energia, estação, gênero, faixa atual/pausada e volume). Dica: utilize <code>StringBuilder</code>.</li>
+          <li><code>public boolean isLigado()</code> / <code>public boolean isTocando()</code> — getters auxiliares para gestão do menu de opções.</li>
+        </ul>
+
+        <h3>3. Aplicação Principal (<code>RadioApp</code>)</h3>
+        <p>Crie a classe <code>RadioApp</code> contendo o método <code>main</code>. Monte um menu interativo utilizando <code>Scanner</code> dentro de uma estrutura de repetição até que o usuário opte por sair:</p>
+        <ul>
+          <li>1 — Ligar / Desligar rádio</li>
+          <li>2 — Tocar / Pausar</li>
+          <li>3 — Aumentar volume</li>
+          <li>4 — Diminuir volume</li>
+          <li>5 — Trocar estação</li>
+          <li>6 — Próxima música</li>
+          <li>7 — Ver status</li>
+          <li>8 — Sair</li>
+        </ul>
+
+        <p><strong>Orientações de implementação do menu:</strong></p>
+        <ul>
+          <li><strong>Opção 1:</strong> alterna entre ligar e desligar utilizando <code>isLigado()</code>.</li>
+          <li><strong>Opção 2:</strong> alterna entre tocar e pausar utilizando <code>isTocando()</code>.</li>
+          <li><strong>Opção 5:</strong> exibe a lista das estações cadastradas (frequência e gênero) antes de solicitar a escolha do usuário.</li>
+        </ul>
+
+        <h3>4. Massa de Dados e Desafio</h3>
+        <p><strong>Dados de teste:</strong> instancie no <code>main</code> ao menos <strong>3 estações</strong>, com pelo menos <strong>2 músicas</strong> em cada playlist.</p>
+        <p><strong>Desafio extra (opcional):</strong> implemente o método privado <code>tempoRestante()</code> para simular o tempo até o término da faixa e chame automaticamente <code>proximaMusica()</code> ao zerar o tempo.</p>
       `,
       exemplo: `import java.util.Scanner;
 
