@@ -279,7 +279,7 @@ body {
 }
 
 .solucao-bloqueada::after {
-  content: "🔒 Solução bloqueada pela monitoria — compareça ao atendimento para discuti-la";
+  content: "Solução bloqueada pela";
   position: absolute;
   inset: 0;
   display: flex;
